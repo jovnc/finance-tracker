@@ -59,9 +59,7 @@ function DashboardLayout({ isLoading, transactions }) {
   });
 
   // 4. Sort CategoriesData according to highest count
-  console.log(categoriesData);
   categoriesData.sort((a, b) => b.count - a.count);
-  console.log(categoriesData);
 
   return (
     <StyledDashboardLayout>
