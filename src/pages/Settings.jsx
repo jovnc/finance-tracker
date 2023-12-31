@@ -1,9 +1,19 @@
+import Heading from "../ui/Heading";
+import Row from "../ui/Row";
+import SettingsForm from "../features/settings/SettingsForm";
 import styled from "styled-components";
 
 const StyledSettings = styled.div`
-  width: 100dvw;
+  width: 80dvw;
 `;
 
 export default function Settings() {
-  return <StyledSettings>Settings</StyledSettings>;
+  return (
+    <StyledSettings>
+      <Row type="horizontal">
+        <Heading as="h4">Settings</Heading>
+      </Row>
+      <SettingsForm />
+    </StyledSettings>
+  );
 }

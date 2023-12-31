@@ -20,7 +20,6 @@ const queryClient = new QueryClient({
 });
 
 function App() {
-  console.log(import.meta.env.VITE_SUPABASE_URL);
   return (
     <DarkModeProvider>
       <QueryClientProvider client={queryClient}>

@@ -9,6 +9,7 @@ import TransactionTableOperations from "../features/transactions/TransactionTabl
 
 const StyledTransactions = styled.div`
   padding-right: 2rem;
+  width: 75dvw;
 `;
 
 const Container = styled.div`

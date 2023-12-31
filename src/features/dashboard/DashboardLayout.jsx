@@ -2,12 +2,17 @@ import TransactionLineGraph from "./TransactionLineGraph";
 import styled from "styled-components";
 import { useSearchParams } from "react-router-dom";
 import Spinner from "../../ui/Spinner";
+import Row from "../../ui/Row";
+import TransactionStats from "./TransactionStats";
+import CategoryPieChart from "./CategoryPieChart";
+import CategoryStats from "./CategoryStats";
 
 const StyledDashboardLayout = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 2fr 1fr;
   grid-template-rows: auto 34rem auto;
   gap: 2.4rem;
+  grid-column: span 2;
 `;
 
 function DashboardLayout({ isLoading, transactions }) {
@@ -38,12 +43,33 @@ function DashboardLayout({ isLoading, transactions }) {
     );
   }
 
+  // 3) Sort into categories and their count
+  const categoriesData = [];
+  const currentCategories = categoriesData.map((category) => category.category);
+  filteredTransactions.forEach((transaction) => {
+    const existingCategory = categoriesData.find(
+      (item) => item.category === transaction.category
+    );
+
+    if (existingCategory) {
+      existingCategory.count += 1;
+    } else {
+      categoriesData.push({ category: transaction.category, count: 1 });
+    }
+  });
+
+  // 4. Sort CategoriesData according to highest count
+  console.log(categoriesData);
+  categoriesData.sort((a, b) => b.count - a.count);
+  console.log(categoriesData);
+
   return (
     <StyledDashboardLayout>
-      <TransactionLineGraph
-        isLoading={isLoading}
-        transactions={filteredTransactions}
-      />
+      <TransactionStats transactions={transactions} />
+
+      <CategoryStats categoriesData={categoriesData} />
+      <TransactionLineGraph transactions={filteredTransactions} />
+      <CategoryPieChart categoriesData={categoriesData} />
     </StyledDashboardLayout>
   );
 }
