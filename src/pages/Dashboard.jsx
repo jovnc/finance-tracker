@@ -16,6 +16,7 @@ const StyledDashboard = styled.div`
 export default function Dashboard() {
   const { isLoading, transactions } = useTransaction();
   if (isLoading) return <Spinner />;
+  if (transactions.length === 0) return <p> No transactions </p>;
 
   return (
     <StyledDashboard>

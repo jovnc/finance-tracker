@@ -43,6 +43,8 @@ function DashboardLayout({ isLoading, transactions }) {
     );
   }
 
+  if (filteredTransactions.length === 0) return <p>No transactions</p>;
+
   // 3) Sort into categories and their count
   const categoriesData = [];
   const currentCategories = categoriesData.map((category) => category.category);

@@ -117,7 +117,7 @@ function CreateTransactionForm({ transactionToEdit = {}, onCloseModal }) {
             options={statusOptions}
           />
         </FormRow>
-        <FormRow label="date" error={errors?.time?.message}>
+        <FormRow label="Date" error={errors?.time?.message}>
           <Input
             type="date"
             id="date"
@@ -127,7 +127,7 @@ function CreateTransactionForm({ transactionToEdit = {}, onCloseModal }) {
             })}
           />
         </FormRow>
-        <FormRow label="Location" error={errors?.location?.message}>
+        {/* <FormRow label="Location" error={errors?.location?.message}>
           <Input
             type="text"
             id="location"
@@ -136,7 +136,7 @@ function CreateTransactionForm({ transactionToEdit = {}, onCloseModal }) {
               required: "This field is required",
             })}
           />
-        </FormRow>
+        </FormRow> */}
         <Input
           type="hidden"
           id="user_id"

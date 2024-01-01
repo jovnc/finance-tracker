@@ -1,30 +1,48 @@
 import React from "react";
-import Form from "../../ui/Form";
 import Heading from "../../ui/Heading";
-import { useForm } from "react-hook-form";
-import FormRow from "../../ui/FormRow";
-import Input from "../../ui/Input";
+import styled from "styled-components";
+import Button from "../../ui/Button";
+
+const StyledCategoryForm = styled.div`
+  padding: 2.4rem 4rem;
+
+  background-color: var(--color-grey-0);
+  border: 1px solid var(--color-grey-100);
+  border-radius: var(--border-radius-md);
+`;
+
+const FormRow = styled.div`
+  display: grid;
+  grid-template-columns: 4fr 1fr;
+  gap: 1.2rem;
+  padding: 1.5rem 0;
+  &:not(:last-child) {
+    border-bottom: 1px solid var(--color-grey-100);
+  }
+`;
+
+const FormLabel = styled.label`
+  padding: 1.2rem 0;
+  font-weight: 500;
+`;
 
 function CategoryForm() {
-  const { register, handleSubmit, errors } = useForm();
   return (
-    <Form>
-      <Heading as="h2">Add Categories</Heading>
-      <FormRow label="Add New Category" error={errors?.amount?.message}>
-        <Input
-          {...register("amount", {
-            required: "This field is required",
-          })}
-        />
+    <StyledCategoryForm>
+      <Heading as="h2">Modify Categories</Heading>
+      <FormRow>
+        <FormLabel>Add new category</FormLabel>
+        <Button size="small" variation="secondary">
+          Add
+        </Button>
       </FormRow>
-      <FormRow label="Remove Category" error={errors?.amount?.message}>
-        <Input
-          {...register("amount", {
-            required: "This field is required",
-          })}
-        />
+      <FormRow>
+        <FormLabel>Remove categories</FormLabel>
+        <Button size="small" variation="danger">
+          Remove
+        </Button>
       </FormRow>
-    </Form>
+    </StyledCategoryForm>
   );
 }
 

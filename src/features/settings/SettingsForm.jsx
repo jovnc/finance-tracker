@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import UserSettingsForm from "./UserSettingsForm";
-import CategoryForm from "./CategoryForm";
+
+import Spinner from "../../ui/Spinner";
+import { useUser } from "../authentication/useUser";
 
 const StyledSettingsForm = styled.div`
   margin-top: 2px;
@@ -11,13 +13,12 @@ const Container = styled.div`
 `;
 
 function SettingsForm() {
+  const { user, isLoading } = useUser();
+  if (isLoading) return <Spinner />;
   return (
     <StyledSettingsForm>
       <Container>
-        <UserSettingsForm />
-      </Container>
-      <Container>
-        <CategoryForm />
+        <UserSettingsForm user={user} />
       </Container>
     </StyledSettingsForm>
   );

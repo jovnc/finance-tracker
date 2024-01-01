@@ -42,3 +42,40 @@ export async function logout() {
   const { error } = await supabase.auth.signOut();
   if (error) throw new Error(error.message);
 }
+
+export async function changeEmail({ currentEmail, email, newEmail, password }) {
+  // check if email matches
+  if (currentEmail !== email)
+    throw new Error("Please enter your correct email");
+  // check if new email is same as current email
+  if (currentEmail === newEmail)
+    throw new Error("Cannot set new email to current email");
+
+  // TODO: check if current password is correct
+
+  // if both matches, update email
+  const { data, error } = await supabase.auth.updateUser({ email: newEmail });
+  if (error) throw new Error(error.message);
+
+  return data;
+}
+
+export async function changePassword({
+  password,
+  newPassword,
+  confirmNewPassword,
+}) {
+  // check if new passwords match
+  if (newPassword !== confirmNewPassword)
+    throw new Error("Passwords do not match");
+
+  // TODO: check if current password is correct
+
+  // if both matches, update password
+  const { data, error } = await await supabase.auth.updateUser({
+    password: newPassword,
+  });
+  if (error) throw new Error(error.message);
+
+  return data;
+}
