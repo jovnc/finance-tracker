@@ -3,7 +3,7 @@ import supabase, { supabaseUrl } from "./supabase";
 export async function getTransactions() {
   let { data: transactions, error } = await supabase
     .from("transactions")
-    .select("*");
+    .select("*, categories(*)");
 
   if (error) {
     console.log(error);

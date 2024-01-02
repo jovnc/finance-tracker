@@ -2,7 +2,7 @@ import Heading from "../../ui/Heading";
 import Button from "../../ui/Button";
 import styled from "styled-components";
 import Modal from "../../ui/Modal";
-import ConfirmDelete from "../../ui/ConfirmDelete";
+import AddCategoryForm from "./AddCategoryForm";
 import ChangeEmailForm from "./ChangeEmailForm";
 import ChangePasswordForm from "./ChangePasswordForm";
 
@@ -33,6 +33,7 @@ function UserSettingsForm({ user }) {
   return (
     <StyledUserSettingsForm>
       <Modal>
+        {/* Settings Buttons */}
         <Heading as="h2">Modify User Settings</Heading>
         <FormRow>
           <FormLabel>Change email</FormLabel>
@@ -54,20 +55,24 @@ function UserSettingsForm({ user }) {
             </Button>
           </Modal.Open>
         </FormRow>
-        <FormRow>
+        {/* <FormRow>
           <FormLabel>Remove Categories</FormLabel>
           <Modal.Open opens="removeCategories">
             <Button size="small" variation="danger">
               Remove
             </Button>
           </Modal.Open>
-        </FormRow>
+        </FormRow> */}
 
+        {/* Modal Windows */}
         <Modal.Window name="changeEmail">
           <ChangeEmailForm user={user} />
         </Modal.Window>
         <Modal.Window name="changePassword">
           <ChangePasswordForm user={user} />
+        </Modal.Window>
+        <Modal.Window name="addCategories">
+          <AddCategoryForm />
         </Modal.Window>
       </Modal>
     </StyledUserSettingsForm>

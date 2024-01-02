@@ -7,17 +7,39 @@ import FormRow from "../../ui/FormRow";
 import Heading from "../../ui/Heading";
 import { useUser } from "../authentication/useUser";
 import Button from "../../ui/Button";
+import Spinner from "../../ui/Spinner";
 import { useEditTransaction } from "./useEditTransaction";
 import DropdownMenu from "../../ui/DropdownMenu";
 import { DevTool } from "@hookform/devtools";
+import useCategory from "../settings/useCategory";
+import { useNavigate } from "react-router-dom";
 
 function CreateTransactionForm({ transactionToEdit = {}, onCloseModal }) {
   const { isCreating, createTransaction } = useCreateTransaction();
   const { isEditing, editTransaction } = useEditTransaction();
-  const isWorking = isCreating || isEditing;
-
+  const { isLoading, categories } = useCategory();
+  const navigate = useNavigate();
   const { id: editId, ...editValues } = transactionToEdit;
   const isEditSession = Boolean(editId);
+  const { register, handleSubmit, reset, onChange, formState, control } =
+    useForm({
+      defaultValues: isEditSession
+        ? editValues
+        : {
+            amount: 0,
+          },
+    });
+
+  const { errors } = formState;
+
+  const { field } = useController({ name: "status", control });
+  const { field: categoryField } = useController({ name: "category", control });
+  const user = useUser();
+  const userid = user.user.id;
+
+  const isWorking = isCreating || isEditing || isLoading;
+
+  if (isWorking) return <Spinner />;
 
   const statusOptions = [
     {
@@ -30,20 +52,11 @@ function CreateTransactionForm({ transactionToEdit = {}, onCloseModal }) {
     },
   ];
 
-  const user = useUser();
-  const userid = user.user.id;
-
-  const { register, handleSubmit, reset, onChange, formState, control } =
-    useForm({
-      defaultValues: isEditSession
-        ? editValues
-        : {
-            amount: 0,
-          },
-    });
-  const { errors } = formState;
-
-  const { field } = useController({ name: "status", control });
+  const categoryOptions = categories
+    ? categories.map((category) => {
+        return { value: category.id, label: category.categoryName };
+      })
+    : null;
 
   function onSubmit(data) {
     if (isEditSession) {
@@ -83,7 +96,10 @@ function CreateTransactionForm({ transactionToEdit = {}, onCloseModal }) {
         onSubmit={handleSubmit(onSubmit, onError)}
         type={onCloseModal ? "modal" : "regular"}
       >
-        <Heading as="h3">New Transaction</Heading>
+        <Heading as="h3">
+          {isEditSession ? "Edit Transaction" : "New Transaction"}
+        </Heading>
+
         <FormRow label="Amount" error={errors?.amount?.message}>
           <Input
             type="number"
@@ -96,16 +112,7 @@ function CreateTransactionForm({ transactionToEdit = {}, onCloseModal }) {
             })}
           />
         </FormRow>
-        <FormRow label="Category" error={errors?.category?.message}>
-          <Input
-            type="text"
-            id="category"
-            disabled={isWorking}
-            {...register("category", {
-              required: "This field is required",
-            })}
-          />
-        </FormRow>
+
         <FormRow
           label="Status (Withdraw/Deposit)"
           error={errors?.status?.message}
@@ -117,6 +124,26 @@ function CreateTransactionForm({ transactionToEdit = {}, onCloseModal }) {
             options={statusOptions}
           />
         </FormRow>
+
+        {categoryOptions.length ? (
+          <FormRow label="Category" error={errors?.category?.message}>
+            <DropdownMenu
+              value={categoryOptions.find(
+                ({ value }) => value === categoryField.value
+              )}
+              isDisabled={isWorking}
+              onChange={(e) => categoryField.onChange(e.value)}
+              options={categoryOptions}
+            />
+          </FormRow>
+        ) : (
+          <FormRow label="Category" error={"No Categories Available"}>
+            <Button onClick={() => navigate("/settings")} id="category">
+              Add Category
+            </Button>
+          </FormRow>
+        )}
+
         <FormRow label="Date" error={errors?.time?.message}>
           <Input
             type="date"
@@ -151,9 +178,14 @@ function CreateTransactionForm({ transactionToEdit = {}, onCloseModal }) {
           >
             Cancel
           </Button>
-          <Button disabled={isWorking}>
+          <Button disabled={isWorking || !categoryOptions.length}>
             {isEditSession ? "Edit Transaction" : "Create new Transaction"}
           </Button>
+          {!categoryOptions.length && (
+            <Button variation="danger" onClick={() => navigate("/settings")}>
+              Add Category
+            </Button>
+          )}
         </FormRow>
       </Form>
       {/* <DevTool control={control} /> */}

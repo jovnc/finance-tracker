@@ -38,8 +38,8 @@ const customStyles = {
   }),
 };
 
-function StyledDropdownMenu({ ...props }) {
+function DropdownMenu({ ...props }) {
   return <Select styles={customStyles} {...props} />;
 }
 
-export default StyledDropdownMenu;
+export default DropdownMenu;

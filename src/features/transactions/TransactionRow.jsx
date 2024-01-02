@@ -7,6 +7,8 @@ import { HiPencil, HiTrash } from "react-icons/hi2";
 import ConfirmDelete from "../../ui/ConfirmDelete";
 import { useDeleteTransaction } from "./useDeleteTransaction";
 import CreateTransactionForm from "./CreateTransactionForm";
+import CategoryField from "../../ui/CategoryField";
+import StatusField from "../../ui/StatusField";
 
 const Entry = styled.div`
   font-size: 1.6rem;
@@ -20,14 +22,21 @@ const Amount = styled.div`
   font-weight: 500;
 `;
 
-function BookingRow({ transaction }) {
+function TransactionRow({ transaction }) {
   const { isDeleting, deleteTransaction } = useDeleteTransaction();
-  const { id: transactionId, amount, category, status, date } = transaction;
+  const { id: transactionId, amount, categories, status, date } = transaction;
+
+  const { backgroundColor, categoryName, textColor } = categories;
+
   return (
     <Table.Row>
       <Entry>{formatCurrency(amount)}</Entry>
-      <Entry>{category}</Entry>
-      <Entry>{status}</Entry>
+      <CategoryField
+        textColor={textColor}
+        backgroundColor={backgroundColor}
+        categoryName={categoryName}
+      />
+      <StatusField status={status} />
       <Entry>{date}</Entry>
       <Modal>
         <Menus.Menu>
@@ -43,7 +52,7 @@ function BookingRow({ transaction }) {
         </Menus.Menu>
         <Modal.Window name="delete">
           <ConfirmDelete
-            resourceName="booking"
+            resourceName="transaction"
             disabled={isDeleting}
             onConfirm={() => deleteTransaction(transactionId)}
           />
@@ -56,51 +65,4 @@ function BookingRow({ transaction }) {
   );
 }
 
-export default BookingRow;
-
-{
-  /* <Modal>
-        <Menus.Menu>
-          <Menus.Toggle id={bookingId} />
-          <Menus.List id={bookingId}>
-            <Menus.Button
-              icon={<HiEye />}
-              onClick={() => navigate(`/bookings/${bookingId}`)}
-            >
-              See details
-            </Menus.Button>
-
-            {status === "unconfirmed" && (
-              <Menus.Button
-                icon={<HiArrowDownOnSquare />}
-                onClick={() => navigate(`/checkin/${bookingId}`)}
-              >
-                Check in
-              </Menus.Button>
-            )}
-
-            {status === "checked-in" && (
-              <Menus.Button
-                icon={<HiArrowUpOnSquare />}
-                onClick={() => checkout(bookingId)}
-                disabled={isCheckingOut}
-              >
-                Check out
-              </Menus.Button>
-            )}
-
-            <Modal.Open opens="delete">
-              <Menus.Button icon={<HiTrash />}>Delete booking</Menus.Button>
-            </Modal.Open>
-          </Menus.List>
-        </Menus.Menu>
-
-        <Modal.Window name="delete">
-          <ConfirmDelete
-            resourceName="booking"
-            disabled={isDeleting}
-            onConfirm={() => deleteBooking(bookingId)}
-          />
-        </Modal.Window>
-      </Modal> */
-}
+export default TransactionRow;

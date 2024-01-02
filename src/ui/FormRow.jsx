@@ -21,9 +21,11 @@ const StyledFormRow = styled.div`
   }
 
   &:has(button) {
-    display: flex;
-    justify-content: flex-end;
-    gap: 1.2rem;
+    &:last-child {
+      display: flex;
+      justify-content: flex-end;
+      gap: 1.2rem;
+    }
   }
 `;
 
