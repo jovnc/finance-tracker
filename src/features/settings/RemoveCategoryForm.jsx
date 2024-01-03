@@ -41,7 +41,9 @@ function RemoveCategoryForm({ onCloseModal }) {
   const { isDeletingCategory, deleteCategory } = useDeleteCategory();
 
   function onSubmit(data) {
-    const categoryId = data.selected;
+    let categoryId = data.selected;
+
+    if (!Array.isArray(categoryId)) categoryId = [String(categoryId)];
     deleteCategory(
       { categoryId },
       {

@@ -44,22 +44,16 @@ function TransactionLineGraph({ transactions }) {
           margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
         >
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis
-            dataKey="date"
-            label={{
-              value: "Dates",
-              position: "insideBottom",
-            }}
-          />
+          <XAxis dataKey="date" />
           <YAxis
             label={{
-              value: "Transactions",
+              value: "Transactions($)",
               angle: -90,
               position: "insideLeft",
             }}
           />
           <Tooltip />
-          <Legend />
+
           <Line type="monotone" dataKey="amount" stroke="#8884d8" />
         </LineChart>
       </Container>

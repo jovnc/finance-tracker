@@ -41,16 +41,10 @@ function TransactionAreaChart({ transactions }) {
               <stop offset="95%" stopColor="#8884d8" stopOpacity={0} />
             </linearGradient>
           </defs>
-          <XAxis
-            dataKey="date"
-            label={{
-              value: "Dates",
-              position: "insideBottom",
-            }}
-          />
+          <XAxis dataKey="date" />
           <YAxis
             label={{
-              value: "Transactions",
+              value: "Transactions($)",
               angle: -90,
               position: "insideLeft",
             }}

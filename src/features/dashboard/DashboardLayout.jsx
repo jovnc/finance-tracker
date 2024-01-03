@@ -76,7 +76,7 @@ function DashboardLayout({ isLoading, transactions }) {
       <CategoryStats categoriesData={categoriesData} />
       <TransactionLineGraph transactions={filteredTransactions} />
       <CategoryPieChart categoriesData={categoriesData} />
-      <TransactionAreaChart transactions={transactions} />
+      <TransactionAreaChart transactions={filteredTransactions} />
     </StyledDashboardLayout>
   );
 }
