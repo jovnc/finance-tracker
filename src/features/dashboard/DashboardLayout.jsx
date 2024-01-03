@@ -6,12 +6,13 @@ import Row from "../../ui/Row";
 import TransactionStats from "./TransactionStats";
 import CategoryPieChart from "./CategoryPieChart";
 import CategoryStats from "./CategoryStats";
+import TransactionAreaChart from "./TransactionAreaChart";
 
 const StyledDashboardLayout = styled.div`
   display: grid;
   grid-template-columns: 2fr 1fr;
   grid-template-rows: auto 34rem auto;
-  gap: 2.4rem;
+  gap: 7rem;
   grid-column: span 2;
 `;
 
@@ -47,16 +48,21 @@ function DashboardLayout({ isLoading, transactions }) {
 
   // 3) Sort into categories and their count
   const categoriesData = [];
-  const currentCategories = categoriesData.map((category) => category.category);
+  const currentCategories = categoriesData.map(
+    (category) => category.categories.categoryName
+  );
   filteredTransactions.forEach((transaction) => {
     const existingCategory = categoriesData.find(
-      (item) => item.category === transaction.category
+      (item) => item.category === transaction.categories.categoryName
     );
 
     if (existingCategory) {
       existingCategory.count += 1;
     } else {
-      categoriesData.push({ category: transaction.category, count: 1 });
+      categoriesData.push({
+        category: transaction.categories.categoryName,
+        count: 1,
+      });
     }
   });
 
@@ -70,6 +76,7 @@ function DashboardLayout({ isLoading, transactions }) {
       <CategoryStats categoriesData={categoriesData} />
       <TransactionLineGraph transactions={filteredTransactions} />
       <CategoryPieChart categoriesData={categoriesData} />
+      <TransactionAreaChart transactions={transactions} />
     </StyledDashboardLayout>
   );
 }

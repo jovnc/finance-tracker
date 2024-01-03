@@ -5,6 +5,7 @@ import Modal from "../../ui/Modal";
 import AddCategoryForm from "./AddCategoryForm";
 import ChangeEmailForm from "./ChangeEmailForm";
 import ChangePasswordForm from "./ChangePasswordForm";
+import RemoveCategoryForm from "./RemoveCategoryForm";
 
 const StyledUserSettingsForm = styled.div`
   padding: 2.4rem 4rem;
@@ -55,14 +56,14 @@ function UserSettingsForm({ user }) {
             </Button>
           </Modal.Open>
         </FormRow>
-        {/* <FormRow>
+        <FormRow>
           <FormLabel>Remove Categories</FormLabel>
           <Modal.Open opens="removeCategories">
             <Button size="small" variation="danger">
               Remove
             </Button>
           </Modal.Open>
-        </FormRow> */}
+        </FormRow>
 
         {/* Modal Windows */}
         <Modal.Window name="changeEmail">
@@ -73,6 +74,9 @@ function UserSettingsForm({ user }) {
         </Modal.Window>
         <Modal.Window name="addCategories">
           <AddCategoryForm />
+        </Modal.Window>
+        <Modal.Window name="removeCategories">
+          <RemoveCategoryForm />
         </Modal.Window>
       </Modal>
     </StyledUserSettingsForm>

@@ -1,3 +1,4 @@
+import { HiExclamationTriangle } from "react-icons/hi2";
 import styled from "styled-components";
 
 const StyledCategoryField = styled.div`
@@ -15,7 +16,13 @@ function CategoryField({ textColor, backgroundColor, categoryName }) {
     color: textColor,
     backgroundColor: backgroundColor,
   };
-  if (!categoryName) return <>Enter Category Name for Preview</>;
+  if (!categoryName)
+    return (
+      <>
+        <HiExclamationTriangle />
+        <span style={{ marginLeft: "1rem" }}>No Preview</span>
+      </>
+    );
   return (
     <StyledCategoryField style={newStyles}>{categoryName}</StyledCategoryField>
   );

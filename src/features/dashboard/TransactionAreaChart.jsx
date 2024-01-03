@@ -1,27 +1,20 @@
+import React from "react";
 import {
-  LineChart,
-  Line,
+  Area,
+  AreaChart,
   CartesianGrid,
+  Tooltip,
   XAxis,
   YAxis,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-  Label,
 } from "recharts";
-
 import Heading from "../../ui/Heading";
 import styled from "styled-components";
 
-const StyledTransactionLineGraph = styled.div`
-  grid-column: span 1;
-`;
-
 const Container = styled.div`
-  padding: 30px 0;
+  padding: 20px 0px;
 `;
 
-function TransactionLineGraph({ transactions }) {
+function TransactionAreaChart({ transactions }) {
   const sortedTransactions = transactions.sort((a, b) =>
     a.date.localeCompare(b.date)
   );
@@ -32,18 +25,22 @@ function TransactionLineGraph({ transactions }) {
       amount: transaction.amount,
     };
   });
-
   return (
-    <StyledTransactionLineGraph>
-      <Heading as="h2">Transaction over time</Heading>
+    <Container>
+      <Heading as="h2"> Transaction Area Chart Over Time</Heading>
       <Container>
-        <LineChart
+        <AreaChart
           width={600}
           height={350}
           data={data}
-          margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+          margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
         >
-          <CartesianGrid strokeDasharray="3 3" />
+          <defs>
+            <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8} />
+              <stop offset="95%" stopColor="#8884d8" stopOpacity={0} />
+            </linearGradient>
+          </defs>
           <XAxis
             dataKey="date"
             label={{
@@ -58,13 +55,19 @@ function TransactionLineGraph({ transactions }) {
               position: "insideLeft",
             }}
           />
+          <CartesianGrid strokeDasharray="3 3" />
           <Tooltip />
-          <Legend />
-          <Line type="monotone" dataKey="amount" stroke="#8884d8" />
-        </LineChart>
+          <Area
+            type="monotone"
+            dataKey="amount"
+            stroke="#8884d8"
+            fillOpacity={1}
+            fill="url(#colorUv)"
+          />
+        </AreaChart>
       </Container>
-    </StyledTransactionLineGraph>
+    </Container>
   );
 }
 
-export default TransactionLineGraph;
+export default TransactionAreaChart;

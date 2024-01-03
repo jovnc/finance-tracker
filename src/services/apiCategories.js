@@ -25,7 +25,13 @@ export async function addCategory({
   return data;
 }
 
-export async function removeCategory() {}
+export async function deleteCategory({ categoryId }) {
+  console.log(categoryId);
+  const { error } = await supabase
+    .from("categories")
+    .delete()
+    .in("id", categoryId);
+}
 
 export async function getCategories() {
   let { data: categories, error } = await supabase
