@@ -7,6 +7,7 @@ import TransactionStats from "./TransactionStats";
 import CategoryPieChart from "./CategoryPieChart";
 import CategoryStats from "./CategoryStats";
 import TransactionAreaChart from "./TransactionAreaChart";
+import AreaChartNetTransactions from "./AreaChartNetTransactions";
 
 const StyledDashboardLayout = styled.div`
   display: grid;
@@ -76,7 +77,8 @@ function DashboardLayout({ isLoading, transactions }) {
       <CategoryStats categoriesData={categoriesData} />
       <TransactionLineGraph transactions={filteredTransactions} />
       <CategoryPieChart categoriesData={categoriesData} />
-      <TransactionAreaChart transactions={filteredTransactions} />
+      {/* <TransactionAreaChart transactions={filteredTransactions} />
+      <AreaChartNetTransactions /> */}
     </StyledDashboardLayout>
   );
 }

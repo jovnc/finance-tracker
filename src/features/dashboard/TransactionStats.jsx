@@ -44,26 +44,46 @@ function TransactionStats({ transactions }) {
   // 3. Net Change
   const netChange = totalDeposited - totalWithdrawn;
 
+  const status = searchParams.get("status");
+
   return (
     <StyledStats>
-      <Stat
-        title="Total Deposited"
-        color="blue"
-        icon={<HiOutlineBriefcase />}
-        value={formatCurrency(totalDeposited)}
-      />
-      <Stat
-        title="Total Withdrawn"
-        color="yellow"
-        icon={<BiMoneyWithdraw />}
-        value={formatCurrency(totalWithdrawn)}
-      />
-      <Stat
-        title="Net Change"
-        color={netChange < 0 ? "red" : "green"}
-        icon={<FaRegMoneyBill1 />}
-        value={formatCurrency(netChange)}
-      />
+      {status === "deposit" ? (
+        <Stat
+          title="Total Deposited"
+          color="blue"
+          icon={<HiOutlineBriefcase />}
+          value={formatCurrency(totalDeposited)}
+        />
+      ) : status === "withdrawal" ? (
+        <Stat
+          title="Total Withdrawn"
+          color="yellow"
+          icon={<BiMoneyWithdraw />}
+          value={formatCurrency(totalWithdrawn)}
+        />
+      ) : (
+        <>
+          <Stat
+            title="Total Deposited"
+            color="blue"
+            icon={<HiOutlineBriefcase />}
+            value={formatCurrency(totalDeposited)}
+          />
+          <Stat
+            title="Total Withdrawn"
+            color="yellow"
+            icon={<BiMoneyWithdraw />}
+            value={formatCurrency(totalWithdrawn)}
+          />
+          <Stat
+            title="Net Change"
+            color={netChange < 0 ? "red" : "green"}
+            icon={<FaRegMoneyBill1 />}
+            value={formatCurrency(netChange)}
+          />
+        </>
+      )}
     </StyledStats>
   );
 }

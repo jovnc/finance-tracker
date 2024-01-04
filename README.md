@@ -2,7 +2,13 @@
 
 This is a capstone project to consolidate my learnings for The Ultimate React Course 2024 by Jonas Schmedtmann. This Finance tracker is built using React frontend framework, and incorporates many React libraries such as React Router, Recharts, Context API, Redux, and more. It is also integrated with Supabase as the backend database built on top of PostgreSQL.
 
-I am hosting the web application using Netlify (free to use) with built-in CI/CD features that integrates seamlessly with GitHub repositories. Click <a href="https://snazzy-chebakia-6a115c.netlify.app/transactions"> here </a> to view the web-site.
+I am hosting the web application using Netlify (free to use) with built-in CI/CD features that integrates seamlessly with GitHub repositories. Click <a href="https://snazzy-chebakia-6a115c.netlify.app"> here </a> to view the web-site.
+
+Use the following credentials for demo:
+Email: demo@gmail.com
+Password: demofinance123
+
+NOTE: Demo account is restricted fromm changing email and password, but all other features is open for public use (shared account)
 
 ## Application Features
 

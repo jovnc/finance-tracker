@@ -31,6 +31,7 @@ const FormLabel = styled.label`
 `;
 
 function UserSettingsForm({ user }) {
+  const isDemo = user.email === "demo@gmail.com";
   return (
     <StyledUserSettingsForm>
       <Modal>
@@ -39,13 +40,17 @@ function UserSettingsForm({ user }) {
         <FormRow>
           <FormLabel>Change email</FormLabel>
           <Modal.Open opens="changeEmail">
-            <Button size="small">Change</Button>
+            <Button size="small" disabled={isDemo}>
+              Change
+            </Button>
           </Modal.Open>
         </FormRow>
         <FormRow>
           <FormLabel>Change password</FormLabel>
           <Modal.Open opens="changePassword">
-            <Button size="small">Change</Button>
+            <Button size="small" disabled={isDemo}>
+              Change
+            </Button>
           </Modal.Open>
         </FormRow>
         <FormRow>
