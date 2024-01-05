@@ -7,12 +7,24 @@ export async function signup({ fullName, email, password }) {
     options: {
       data: {
         fullName,
-        avatar: "",
       },
     },
   });
 
-  if (error) throw new Error(error.message);
+  let authError = null;
+
+  if (data.user && data.user.identities && data.user.identities.length === 0) {
+    authError = {
+      name: "AuthApiError",
+      message: "User already exists",
+    };
+  } else if (error)
+    authError = {
+      name: error.name,
+      message: error.message,
+    };
+
+  if (authError) throw new Error(authError.message);
 
   return data;
 }
